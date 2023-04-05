@@ -16,7 +16,7 @@ index 39a4156..e61ba82 100644
  #endif
  #if CYTHON_USE_PYLONG_INTERNALS
 -  #include "longintrepr.h"
-+  #include "cpython/longintrepr.h"
++  #include "Python.h"
    #undef SHIFT
    #undef BASE
    #undef MASK
