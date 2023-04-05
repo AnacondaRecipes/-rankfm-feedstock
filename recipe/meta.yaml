@@ -6,23 +6,21 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4f9b1257aa05f4b5e6e682fb26f281bb0dbe32b81da1d8910873b90b1815063f
+  url: https://github.com/etlundquist/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: a088a9e323b878fcbf900205e0833fa2aabdb0861460bb06f62f5aab62d128f7
   patches:
-    - fix_cython.patch
-    #- fix_longintrepr_header.patch
+    - patches/0001_fix_cython.patch
 
 build:
-  skip: true  # [py<36]
+  skip: True  # [py<36]
   script: 
-    #- {{ PYTHON }} setup.py build_ext --include-dirs=$PREFIX/include --library-dirs=$PREFIX/lib    # [not win]
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   number: 0
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - patch  # [not win]
+    - patch     # [not win]
     - m2-patch  # [win]
   host:
     - python
@@ -46,7 +44,7 @@ test:
 about:
   home: https://github.com/etlundquist/rankfm
   summary: A python implementation of the generic factorization machines model class adapted for collaborative filtering recommendation problems with implicit feedback user-item interaction data and (optionally) additional user/item side features
-  license:	GPL-3.0-or-later
+  license: GPL-3.0-or-later
   license_family: GPL
   license_file: LICENSE
   description: |
@@ -58,3 +56,4 @@ about:
 extra:
   recipe-maintainers:
     - skupr-anaconda
+    - sumit0190
