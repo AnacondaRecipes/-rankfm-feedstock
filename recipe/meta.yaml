@@ -8,25 +8,29 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 4f9b1257aa05f4b5e6e682fb26f281bb0dbe32b81da1d8910873b90b1815063f
+  patches:
+    - fix_longintrepr_header.patch
 
 build:
   skip: true  # [py<36]
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
   number: 0
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - patch  # [not win]
+    - m2-patch  # [win]
   host:
     - python
     - cython
     - pip
-    - numpy {{ numpy }}
+
     - setuptools
     - wheel
   run:
     - python
-    - numpy >={{ numpy }},<1.27.0
+    - numpy >=1.15
     - pandas >=0.24
 
 test:

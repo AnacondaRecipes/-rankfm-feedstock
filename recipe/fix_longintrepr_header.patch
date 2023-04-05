@@ -1,0 +1,25 @@
+From 01de617bb8d062e8a212a327e04fd042e064437c Mon Sep 17 00:00:00 2001
+From: Serhii Kupriienko <skupriienko@anaconda.com>
+Date: Wed, 5 Apr 2023 10:42:32 +0300
+Subject: [PATCH] Fix longintrepr header path
+
+---
+ rankfm/_rankfm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rankfm/_rankfm.c b/rankfm/_rankfm.c
+index 39a4156..e61ba82 100644
+--- a/rankfm/_rankfm.c
++++ b/rankfm/_rankfm.c
+@@ -218,7 +218,7 @@ END: Cython Metadata */
+ #define CYTHON_FAST_PYCCALL  (CYTHON_FAST_PYCALL && PY_VERSION_HEX >= 0x030600B1)
+ #endif
+ #if CYTHON_USE_PYLONG_INTERNALS
+-  #include "longintrepr.h"
++  #include "cpython/longintrepr.h"
+   #undef SHIFT
+   #undef BASE
+   #undef MASK
+-- 
+2.39.0
+
