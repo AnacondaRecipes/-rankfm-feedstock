@@ -9,11 +9,14 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 4f9b1257aa05f4b5e6e682fb26f281bb0dbe32b81da1d8910873b90b1815063f
   patches:
-    - fix_longintrepr_header.patch
+    - fix_cython.patch
+    #- fix_longintrepr_header.patch
 
 build:
   skip: true  # [py<36]
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  script: 
+    #- {{ PYTHON }} setup.py build_ext --include-dirs=$PREFIX/include --library-dirs=$PREFIX/lib    # [not win]
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   number: 0
 
 requirements:
@@ -25,7 +28,6 @@ requirements:
     - python
     - cython
     - pip
-
     - setuptools
     - wheel
   run:
