@@ -1,0 +1,54 @@
+{% set name = "rankfm" %}
+{% set version = "0.2.5" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 4f9b1257aa05f4b5e6e682fb26f281bb0dbe32b81da1d8910873b90b1815063f
+
+build:
+  skip: true  # [py<36]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - python
+    - cython
+    - pip
+    - numpy {{ numpy }}
+    - setuptools
+    - wheel
+  run:
+    - python
+    - numpy >={{ numpy }},<1.27.0
+    - pandas >=0.24
+
+test:
+  imports:
+    - rankfm
+  requires:
+    - pip
+  commands:
+    - pip check
+
+about:
+  home: https://github.com/etlundquist/rankfm
+  summary: A python implementation of the generic factorization machines model class adapted for collaborative filtering recommendation problems with implicit feedback user-item interaction data and (optionally) additional user/item side features
+  license:	GPL-3.0-or-later
+  license_family: GPL
+  license_file: LICENSE
+  description: |
+    RankFM is a python implementation of the general Factorization Machines model class adapted for collaborative filtering recommendation/ranking problems with implicit feedback user/item interaction data. It uses Bayesian Personalized Ranking (BPR) and a variant of Weighted Approximate-Rank Pairwise (WARP) loss to learn model weights via Stochastic Gradient Descent (SGD). It can (optionally) incorporate sample weights and user/item auxiliary features to augment the main interaction data.
+    The core (training, prediction, recommendation) methods are written in Cython, making it possible to scale to millions of user/item interactions. Designed for ease-of-use, RankFM accepts both pd.DataFrame and np.ndarray inputs - you do not have to convert your data to scipy.sparse matrices or re-map user/item identifiers prior to use. RankFM internally maps all user/item identifiers to zero-based integer indexes, but always converts its output back to the original user/item identifiers from your data, which can be arbitrary (non-zero-based, non-consecutive) integers or even strings.
+  dev_url: https://github.com/etlundquist/rankfm
+  doc_url: https://rankfm.readthedocs.io/en/latest/
+
+extra:
+  recipe-maintainers:
+    - skupr-anaconda
