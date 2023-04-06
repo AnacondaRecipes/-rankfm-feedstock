@@ -1,17 +1,17 @@
-From edc077a8e851f3cf6c6c8289933069069a347730 Mon Sep 17 00:00:00 2001
-From: Serhii Kupriienko
-Date: Thu, 6 Apr 2023 10:31:23 +0300
+From 81639c6e1adb0fa4f9a0dc400e58a3b6ccdcb777 Mon Sep 17 00:00:00 2001
+From: Serhii Kupriienko <skupriienko@anaconda.com>
+Date: Thu, 6 Apr 2023 10:49:59 +0300
 Subject: [PATCH] Fix cython and remove a compiler flag
 
 ---
- setup.py | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ setup.py | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 48c4c08..b3df96a 100644
+index 48c4c08..cdd944e 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -10,18 +10,13 @@ VERSION = '0.2.5'
+@@ -10,20 +10,13 @@ VERSION = '0.2.5'
  # ----------------------------------------
  
  # prefer the generated C extensions when building
@@ -24,17 +24,20 @@ index 48c4c08..b3df96a 100644
 -    from Cython.Build import cythonize
 -    use_cython = True
 -    ext = 'pyx'
+-
+-# add compiler arguments to optimize machine code and ignore warnings
+-disabled_warnings = ['-Wno-unused-function', '-Wno-uninitialized']
+-compile_args = ['-O2', '-ffast-math'] + disabled_warnings
 +print("re-generating C source with cythonize...")
 +from Cython.Build import cythonize
 +use_cython = True
 +ext = 'pyx'
  
- # add compiler arguments to optimize machine code and ignore warnings
--disabled_warnings = ['-Wno-unused-function', '-Wno-uninitialized']
-+disabled_warnings = ['-Wno-unused-function']
- compile_args = ['-O2', '-ffast-math'] + disabled_warnings
- 
++# add compiler arguments to optimize machine code
++compile_args = ['-O2', '-ffast-math']
  # define the _rankfm extension including the wrapped MT module
+ extensions = [
+     Extension(
 -- 
 2.39.0
 
