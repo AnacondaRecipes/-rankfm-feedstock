@@ -31,7 +31,7 @@ index 48c4c08..b3df96a 100644
  
  # add compiler arguments to optimize machine code and ignore warnings
 -disabled_warnings = ['-Wno-unused-function', '-Wno-uninitialized']
-+disabled_warnings = ['-Wno-uninitialized']
++disabled_warnings = ['-Wno-unused-function']
  compile_args = ['-O2', '-ffast-math'] + disabled_warnings
  
  # define the _rankfm extension including the wrapped MT module
